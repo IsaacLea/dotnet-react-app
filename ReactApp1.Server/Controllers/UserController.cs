@@ -8,11 +8,11 @@ namespace ReactApp1.Server.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class UserController(ILogger<UserController> logger, MyDBContext dbContext) : ControllerBase
+    public class UserController(ILogger<UserController> logger, PostgresContext dbContext) : ControllerBase
     {
         
         private readonly ILogger<UserController> _logger = logger;
-        private readonly MyDBContext _dbContext = dbContext;
+        private readonly PostgresContext _dbContext = dbContext;
 
         [HttpGet(Name = "GetUsers")]
         public IEnumerable<User> Get()

@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReactApp1.Server.DAL
 {
-    public class UserRepository(MyDBContext userContext) : IUserRepository
+    public class UserRepository(PostgresContext userContext) : IUserRepository
     {
-        private readonly MyDBContext _userContext = userContext;
+        private readonly PostgresContext _userContext = userContext;
 
         public void AddUser(User user)
         {

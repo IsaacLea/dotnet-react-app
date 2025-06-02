@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using ReactApp1.Server.DAL; // Add this using directive to resolve 'UseSqlServer'
+using ReactApp1.Server.DAL;
+using ReactApp1.Server.Models; // Add this using directive to resolve 'UseSqlServer'
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add all the database contexts
-builder.Services.AddDbContext<MyDBContext>(options =>
+builder.Services.AddDbContext<PostgresContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
