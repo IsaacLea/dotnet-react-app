@@ -13,3 +13,7 @@ bin/
 *.sln
 *.sw?
 .vs
+
+*.user
+appsettings.json
+appsettings.Development.json
