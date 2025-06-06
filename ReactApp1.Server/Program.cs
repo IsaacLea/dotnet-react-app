@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.DAL;
-using ReactApp1.Server.Models; // Add this using directive to resolve 'UseSqlServer'
+using ReactApp1.Server.Models;
+using ReactApp1.Server.Service;
+using ReactApp1.Server.Util;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +14,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add all the database contexts
-builder.Services.AddDbContext<PostgresContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<SQLServerContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register the Automapper profile
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
+//builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+//builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

@@ -1,32 +1,42 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ReactApp1.Server.DAL;
-using ReactApp1.Server.Models;
+using ReactApp1.Server.DTO;
+using ReactApp1.Server.Service;
 
 namespace ReactApp1.Server.Controllers
 {
-
-
     [ApiController]
     [Route("[controller]")]
-    public class UserController(ILogger<UserController> logger, PostgresContext dbContext) : ControllerBase
+    public class UserController(ILogger<UserController> logger, IMapper mapper, IUserService userService) : ControllerBase
     {
-        
         private readonly ILogger<UserController> _logger = logger;
-        private readonly PostgresContext _dbContext = dbContext;
+        private readonly IMapper _mapper = mapper;
+        private readonly IUserService _userService = userService;
 
         [HttpGet(Name = "GetUsers")]
-        public IEnumerable<User> Get()
+        public IEnumerable<UserDTO> Get()
         {
-            return GetUsers();
-           
+            return _userService.GetUsers().GetAwaiter().GetResult();
         }
 
-        private IEnumerable<User> GetUsers()
-        {                       
-            var userRepository = new UserRepository(_dbContext);
+        // POST: /User
+        [HttpPost]
+        public IActionResult Post([FromBody] UserDTO userDTO)
+        {
+            if (userDTO == null)
+            {
+                return BadRequest("User data is required.");
+            }
 
-            return userRepository.GetUsers();
+            _userService.AddUser(userDTO);
 
+            return CreatedAtRoute("GetUsers", null, userDTO);
+
+            //var userRepository = new UserRepository(_dbContext);
+            //user.CreateAt = DateTime.UtcNow;
+            //userRepository.AddUser(user);
+
+            //return CreatedAtRoute("GetUsers", new { id = user.Id }, user);
         }
     }
 }

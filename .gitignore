@@ -11,3 +11,6 @@
 *.sln
 *.sw?
 .vs
+
+sqlserverdata/
+*.user

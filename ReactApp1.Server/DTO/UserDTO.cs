@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace ReactApp1.Server.Models;
+namespace ReactApp1.Server.DTO;
 
-public partial class User
+public partial class UserDTO
 {
     public int Id { get; set; }
 
@@ -15,5 +15,5 @@ public partial class User
 
     public DateTime CreateTime { get; set; }
 
-    public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
+    public virtual ICollection<PostDTO> Posts { get; set; } = new List<PostDTO>();
 }

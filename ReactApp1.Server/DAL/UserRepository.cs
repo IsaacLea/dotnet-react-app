@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Models;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReactApp1.Server.DAL
 {
-    public class UserRepository(PostgresContext userContext) : IUserRepository
+    public class UserRepository(SQLServerContext userContext) : IUserRepository
     {
-        private readonly PostgresContext _userContext = userContext;
+        private readonly SQLServerContext _userContext = userContext;
 
         public void AddUser(User user)
         {

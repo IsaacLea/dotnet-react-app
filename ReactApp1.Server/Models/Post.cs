@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 namespace ReactApp1.Server.Models;
 
-public partial class User
+public partial class Post
 {
     public int Id { get; set; }
 
-    public string FirstName { get; set; }
-
-    public string LastName { get; set; }
+    public string Text { get; set; }
 
     public DateTime CreateTime { get; set; }
 
-    public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
+    public int UserId { get; set; }
+
+    public virtual User User { get; set; }
 }
