@@ -6,7 +6,7 @@ using ReactApp1.Server.Controllers;
 using ReactApp1.Server.DTO;
 using ReactApp1.Server.Service;
 
-namespace ReactApp1.Server.Tests.Controllers
+namespace ServerTestProject.UnitTests.Controllers
 {
     public class UserControllerTests
     {
