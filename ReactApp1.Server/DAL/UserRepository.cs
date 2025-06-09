@@ -27,10 +27,16 @@ namespace ReactApp1.Server.DAL
             return await _userContext.Set<User>().ToListAsync();
         }
 
+        public async Task<IEnumerable<User>> GetUsersByLastName(string lastName)
+        {
+            return await _userContext.Set<User>()
+                .Where(u => u.LastName.Contains(lastName))
+                .ToListAsync();
+        }
+
         public void SaveChanges()
         {
             _userContext.SaveChanges();
         }
-
     }
 }

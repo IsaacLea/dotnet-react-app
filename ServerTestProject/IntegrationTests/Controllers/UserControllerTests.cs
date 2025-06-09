@@ -17,23 +17,39 @@ namespace ServerTestProject.IntegrationTests.Controllers
         }
 
         [Fact]
+        public void Get_UsersByName()
+        {
+            using var serviceScope = _factory.Services.CreateScope();
+            var userController = serviceScope.ServiceProvider.GetService<UserController>();
+            Assert.NotNull(userController);
+            var users = userController.Get();
+            Assert.NotNull(users);
+            Assert.NotEmpty(users);
+        }
+        [Fact]
         public void Post_ValidUserDTO_ReturnsCreatedAtRoute()
         {
 
-            using (var serviceScope = _factory.Services.CreateScope())
+            using var serviceScope = _factory.Services.CreateScope();
+            var userController = serviceScope.ServiceProvider.GetService<UserController>();
+
+            Assert.NotNull(userController);
+
+            var userDto = new UserDTO
             {
-                var userController = serviceScope.ServiceProvider.GetService<UserController>();
+                FirstName = "John",
+                LastName = "Doe"
+            };
 
-                var userDto = new UserDTO
-                {
-                    Id = 1,
-                    FirstName = "John",
-                    LastName = "Doe"
-                };
+            var postDTO = new PostDTO
+            {
+                Text = "Sample Post"
+            };
 
-                userController.Post(userDto);
+            userDto.Posts.Add(postDTO);
 
-            }
+
+            userController.Post(userDto);
         }
 
 
