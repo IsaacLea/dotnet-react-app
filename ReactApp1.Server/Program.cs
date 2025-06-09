@@ -39,6 +39,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+if (!app.Environment.IsDevelopment())
+{
+    // Use the error controller to manage exceptions in non dev environments
+    app.UseExceptionHandler("/error");
+}
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
