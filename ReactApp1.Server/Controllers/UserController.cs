@@ -16,6 +16,7 @@ namespace ReactApp1.Server.Controllers
         [HttpGet(Name = "GetUsers")]
         public IEnumerable<UserDTO> Get()
         {
+            _logger.LogInformation("Fetching all users from the database.");
             return _userService.GetUsers().GetAwaiter().GetResult();
         }
 
@@ -23,9 +24,11 @@ namespace ReactApp1.Server.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] UserDTO userDTO)
         {
-            if (userDTO == null)
+
+            var validationResult = ValidateUserDTO(userDTO);
+            if (validationResult != null)
             {
-                return BadRequest("User data is required.");
+                return validationResult;
             }
 
             _userService.AddUser(userDTO);
@@ -37,6 +40,26 @@ namespace ReactApp1.Server.Controllers
             //userRepository.AddUser(user);
 
             //return CreatedAtRoute("GetUsers", new { id = user.Id }, user);
+        }
+
+        private IActionResult? ValidateUserDTO(UserDTO userDTO)
+        {
+            if (userDTO == null)
+            {
+                return BadRequest("User data is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(userDTO.FirstName))
+            {
+                return BadRequest("FirstName is required and cannot be blank.");
+            }
+
+            if (string.IsNullOrWhiteSpace(userDTO.LastName))
+            {
+                return BadRequest("LastName is required and cannot be blank.");
+            }
+
+            return null;
         }
     }
 }
