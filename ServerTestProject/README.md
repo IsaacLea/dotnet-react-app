@@ -18,3 +18,10 @@
   Some say that EF itself is a repository and adding an explicit layer is redundant, but I prefer to have a separate layer for data access logic.  This allows for better separation of concerns and makes it easier to swap out the data access technology if needed in the future.
   The alternative is to inject DbContext into the service layer which would be simpler.
 - There is an approach of returning IQueryable instead of IEnumerable from the repo layer queries to allow the business logic to customize the query before execution, but this has the downside of making the repo layer lest testable and leaking database logic into the service layer.
+
+** Exception handling
+- The developer error page is enabled by default when running in Dev mode (includes stack trace and some additional info)
+- For non development, an ErrorController is added with a /error route registered in program.cs
+
+** Input validation
+- Only basic manual input validation has been added on the controller.  Consider using FluentValidator to setup validation rules on DTOs.
