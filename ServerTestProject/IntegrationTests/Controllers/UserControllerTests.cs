@@ -8,8 +8,6 @@ namespace ServerTestProject.IntegrationTests.Controllers
     public class UserControllerTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly WebApplicationFactory<Program> _factory;
-
-
         public UserControllerTests(WebApplicationFactory<Program> factory)
         {
             _factory = factory;
@@ -17,15 +15,19 @@ namespace ServerTestProject.IntegrationTests.Controllers
         }
 
         [Fact]
-        public void Get_UsersByName()
+        public void Get_Users()
         {
             using var serviceScope = _factory.Services.CreateScope();
             var userController = serviceScope.ServiceProvider.GetService<UserController>();
+
             Assert.NotNull(userController);
+
             var users = userController.Get();
+
             Assert.NotNull(users);
             Assert.NotEmpty(users);
         }
+
         [Fact]
         public void Post_ValidUserDTO_ReturnsCreatedAtRoute()
         {
